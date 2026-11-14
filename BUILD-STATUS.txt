@@ -1,0 +1,19 @@
+AUREXIS Browser 2.0 Repaired Source Package
+===========================================
+
+Source preservation:
+- Original MainActivity.java retained byte-for-byte.
+- Original AndroidManifest.xml retained byte-for-byte.
+- Original app/build.gradle retained byte-for-byte.
+- Original desktop integration script retained byte-for-byte.
+
+Build repair:
+- Gradle pinned to 8.9.
+- Gradle bootstrap script added.
+- Android SDK preflight checks added.
+- Hosted x86-64 Linux ARMv7 APK workflow added.
+
+Important:
+- This archive contains source code and build tooling, not an APK.
+- The included hosted workflow must be run to compile the APK.
+- No claim of successful Android compilation or on-device testing is made.
