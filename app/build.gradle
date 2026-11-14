@@ -2,7 +2,7 @@ plugins { id 'com.android.application' }
 
 android {
     namespace 'com.aurexis.browser'
-    compileSdk 37
+    compileSdk 36
     defaultConfig {
         applicationId 'com.aurexis.browser'
         minSdk 26
