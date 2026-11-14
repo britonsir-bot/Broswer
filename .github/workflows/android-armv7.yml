@@ -3,8 +3,12 @@ name: Build AUREXIS Browser 2 (ARMv7)
 on:
   workflow_dispatch:
   push:
+    branches: [main]
     paths:
-      - 'AUREXIS-Browser-2.0-REPAIRED.zip.b64'
+      - 'app/**'
+      - '*.gradle'
+      - 'gradle/**'
+      - 'gradlew'
       - '.github/workflows/android-armv7.yml'
 
 jobs:
@@ -21,24 +25,18 @@ jobs:
           packages: platform-tools
       - name: Install Android SDK packages
         run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
-      - name: Extract repaired source
-        run: |
-          base64 -d AUREXIS-Browser-2.0-REPAIRED.zip.b64 > repaired.zip
-          mkdir source
-          unzip -q repaired.zip -d source
       - name: Build ARMv7 debug APK
-        working-directory: source
         run: |
           chmod +x gradlew build.sh
-          ./gradlew --no-daemon :app:assembleDebug
+          ./gradlew --no-daemon --stacktrace :app:clean :app:assembleDebug
       - name: Verify APK
         run: |
-          APK=source/app/build/outputs/apk/debug/app-debug.apk
+          APK=app/build/outputs/apk/debug/app-debug.apk
           test -s "$APK"
           "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$APK" | head -n 8
       - uses: actions/upload-artifact@v4
         with:
           name: AUREXIS-Browser-2.0-ARMv7-APK
-          path: source/app/build/outputs/apk/debug/app-debug.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14
